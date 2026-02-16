@@ -1,0 +1,362 @@
+\documentclass[aspectratio=169, 10pt]{beamer} 
+% aspectratio=169 fuerza el formato panorámico
+
+% --- TEMA Y FUENTES ---
+\usetheme{metropolis}
+% Opciones del tema: Bloques con fondo de color y barra de progreso
+\metroset{block=fill, progressbar=frametitle, background=light}
+
+\usepackage[sfdefault]{raleway} % Fuente moderna sans-serif
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+% --- PAQUETES GRÁFICOS ---
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, shapes, calc} % Librerías para mejores diagramas
+
+% --- COLORES PERSONALIZADOS ---
+\definecolor{primary}{RGB}{0,102,204}      % Azul corporativo
+\definecolor{secondary}{RGB}{51,153,255}    % Azul claro
+\definecolor{accent}{RGB}{255,87,34}        % Naranja acento
+\definecolor{darkgray}{RGB}{60,60,60}
+
+% Asignación de colores al tema
+\setbeamercolor{palette primary}{bg=primary, fg=white}
+\setbeamercolor{frametitle}{bg=primary, fg=white}
+\setbeamercolor{alerted text}{fg=accent}
+\setbeamercolor{progress bar}{fg=accent, bg=primary!30}
+
+% --- INFORMACIÓN DE LA PRESENTACIÓN ---
+\title{Transformadores de Estado Sólido (SST)}
+\subtitle{Innovación tecnológica en control de tensión}
+\author{Tu Nombre}
+\institute{ADCE}
+\date{\today}
+
+\begin{document}
+
+% 1. PORTADA
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% 2. ÍNDICE
+\begin{frame}{Contenido}
+    \setbeamertemplate{section in toc}[sections numbered]
+    \tableofcontents
+\end{frame}
+
+% --- SECCIÓN 1 ---
+\section{Introducción}
+
+\begin{frame}{¿Qué vamos a ver hoy?}
+    \begin{columns}[T] % Alineación superior
+        \column{0.5\textwidth}
+        \vspace{1em}
+        \begin{itemize}
+            \item Una tendencia tecnológica emergente en el campo del control de tensión.
+            \item Los \textbf{Transformadores de Estado Sólido (SST)}.
+            \item Conocidos como \textit{Solid State Transformers} en inglés.
+        \end{itemize}
+        
+        \column{0.5\textwidth}
+        \begin{figure}
+            \centering
+            % NOTA: Reemplaza 'example-image-a' con tu archivo 'sst_conceptual.png'
+            \includegraphics[width=0.9\textwidth]{example-image-a}
+            \caption{\footnotesize Ilustración conceptual de un SST moderno.}
+        \end{figure}
+    \end{columns}
+\end{frame}
+
+% --- SECCIÓN 2 ---
+\section{Conceptos Previos}
+
+\begin{frame}{Recordatorio 1: Transformador Convencional}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{¿Qué hace?}
+        \begin{itemize}
+            \item Transforma niveles de tensión en CA.
+            \item Utiliza campos electromagnéticos.
+            \item Dos devanados acoplados magnéticamente.
+        \end{itemize}
+        
+        \vspace{0.5em}
+        \textbf{Importancia:}
+        \begin{itemize}
+            \item Razón principal del uso de corriente alterna.
+            \item Eficiencia energética en transmisión.
+        \end{itemize}
+
+        \column{0.5\textwidth}
+        \begin{figure}
+            \centering
+            % Reemplaza con 'transformador_convencional'
+            \includegraphics[width=0.8\textwidth]{example-image-b}
+            \caption{\footnotesize Esquema de un transformador convencional.}
+        \end{figure}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Recordatorio 2: STATCOM}
+    \begin{columns}
+        \column{0.55\textwidth}
+        \textbf{Función principal:}
+        \begin{itemize}
+            \item Control de tensión en la red.
+            \item Mejora calidad del suministro.
+            \item Intercambio de potencia reactiva.
+        \end{itemize}
+        
+        \vspace{0.5em}
+        \textbf{Características:}
+        \begin{itemize}
+            \item Conexión en \textbf{\textcolor{accent}{paralelo}}.
+            \item Basado en VSC (\textit{Voltage Source Converters}).
+            \item Consume solo potencia activa para pérdidas.
+        \end{itemize}
+
+        \column{0.45\textwidth}
+        \begin{figure}
+            \centering
+            % Reemplaza con 'statcom_esquema'
+            \includegraphics[width=0.9\textwidth]{example-image-c}
+            \caption{\footnotesize STATCOM en paralelo a la red.}
+        \end{figure}
+    \end{columns}
+\end{frame}
+
+% --- SECCIÓN 3 ---
+\section{Transformadores de Estado Sólido}
+
+\begin{frame}{¿Qué son los SST?}
+    \begin{block}{Definición}
+        Los SST son equipos de paso que se conectan \textbf{\textcolor{accent}{en serie}} al flujo de potencia, similar a los transformadores convencionales, pero usando electrónica de potencia.
+    \end{block}
+
+    \vspace{1.5em}
+
+    \begin{center}
+    \begin{tikzpicture}[auto, node distance=2cm, >=Stealth]
+        % Dibujo esquemático mejorado
+        \node (redMT) [text width=1.5cm, align=center] {Red MT};
+        \node (sst) [right=1cm of redMT, fill=secondary, text=white, minimum width=2.5cm, minimum height=1cm, rounded corners] {\textbf{SST}};
+        \node (redBT) [right=1cm of sst, text width=1.5cm, align=center] {Red BT};
+        
+        \draw[very thick, primary, ->] (redMT) -- (sst);
+        \draw[very thick, primary, ->] (sst) -- (redBT);
+    \end{tikzpicture}
+    \end{center}
+
+    \vspace{1em}
+    \centering
+    \textbf{Diferencia clave:} STATCOM $\rightarrow$ Paralelo (Derivación) vs. SST $\rightarrow$ Serie (Paso).
+\end{frame}
+
+\begin{frame}{Funcionalidad Híbrida}
+    \begin{center}
+        \LARGE
+        \textcolor{primary}{SST} = \textcolor{secondary}{Transformador} + \textcolor{accent}{Compensador}
+    \end{center}
+
+    \vspace{1.5em}
+
+    \begin{columns}[t]
+        \column{0.45\textwidth}
+        \begin{exampleblock}{Como Transformador}
+            \begin{itemize}
+                \item Transforma tensión.
+                \item Transfiere potencia activa.
+                \item Aislamiento galvánico.
+            \end{itemize}
+        \end{exampleblock}
+
+        \column{0.45\textwidth}
+        \begin{alertblock}{Como Compensador}
+            \begin{itemize}
+                \item Control de factor de potencia.
+                \item Regulación dinámica.
+                \item Eliminación de armónicos.
+            \end{itemize}
+        \end{alertblock}
+    \end{columns}
+\end{frame}
+
+% --- SECCIÓN 4 ---
+\section{Características Principales}
+
+\begin{frame}{Características Esenciales de los SST}
+    \begin{enumerate}
+        \item \textbf{Transformación de tensión} con transmisión de potencia activa.
+        \vspace{0.3em}
+        \item \textbf{Control de factor de potencia} activo.
+        \vspace{0.3em}
+        \item \textbf{Regulación dinámica de tensión:}
+        \begin{itemize}
+            \item Si entrada baja 10\% $\rightarrow$ salida mantiene 230V exactos.
+            \item (Un trafo convencional no puede hacer esto sin tap-changers lentos).
+        \end{itemize}
+        \vspace{0.3em}
+        \item \textbf{Reducción drástica de peso y volumen:}
+        \begin{itemize}
+            \item Opera a $\sim$20,000 Hz (vs 50 Hz convencional).
+            \item Transformador físico mucho más pequeño.
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Más Características Destacadas}
+    \begin{columns}
+        \column{0.6\textwidth}
+        \begin{enumerate}
+            \setcounter{enumi}{4}
+            \item \textbf{Bus de corriente continua (DC):}
+            \begin{itemize}
+                \footnotesize
+                \item Conexión directa de paneles solares.
+                \item Carga directa de VE sin rectificador externo.
+            \end{itemize}
+            \item \textbf{Eliminación de armónicos.}
+            \item \textbf{Clave para SmartGrids:}
+            \begin{itemize}
+                 \footnotesize
+                \item Control total del flujo (bidireccional).
+            \end{itemize}
+        \end{enumerate}
+        
+        \column{0.4\textwidth}
+        \begin{alertblock}{Aplicación}
+            Principalmente en redes de \textbf{Media} y \textbf{Baja Tensión} (debido a límites actuales de los semiconductores).
+        \end{alertblock}
+    \end{columns}
+\end{frame}
+
+% --- SECCIÓN 5 ---
+\section{Arquitectura del SST}
+
+\begin{frame}{Esquema Típico de un SST}
+    \begin{figure}
+        \centering
+        % Reemplaza con 'sst_bloques'
+        \includegraphics[width=0.85\textwidth, height=4cm]{example-image}
+        \caption{\footnotesize Tres etapas: Rectificador AC/DC + Convertidor DC/DC (con HFT) + Inversor DC/AC.}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Etapa 2: El "Corazón" (DC/DC Alta Frecuencia)}
+    \begin{columns}
+        \column{0.55\textwidth}
+        \begin{block}{Componentes}
+        \begin{itemize}
+            \item Inversor DC/AC (alta frecuencia).
+            \item \textbf{Transformador de Alta Frecuencia (HFT)}.
+            \item Rectificador AC/DC.
+        \end{itemize}
+        \end{block}
+        
+        \vspace{0.5em}
+        \textbf{Ventaja del HFT:}
+        \small
+        Al operar a $\sim$20 kHz, el núcleo magnético necesario es minúsculo comparado con uno de 50 Hz, manteniendo el aislamiento galvánico.
+        
+        \column{0.4\textwidth}
+        \begin{figure}
+            \centering
+            % Reemplaza con 'hft_comparacion'
+            \includegraphics[width=0.8\textwidth]{example-image-b}
+            \caption{\footnotesize HFT vs Trafo convencional.}
+        \end{figure}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Proceso de Conversión Completo}
+    \centering
+    % Diagrama TikZ mejorado y rediseñado
+    \begin{tikzpicture}[
+        node distance=0.8cm and 0.5cm,
+        auto,
+        block/.style={rectangle, draw=primary, thick, fill=white, text width=1.4cm, align=center, rounded corners, minimum height=1cm, font=\scriptsize},
+        arrow/.style={-Stealth, thick, primary}
+    ]
+
+        % Nodos
+        \node[block] (rect) {Rectific.\\AC/DC};
+        \node[block, right=of rect] (invHF) {Inv. HF\\DC/AC};
+        \node[block, right=of invHF, fill=secondary!20, draw=secondary] (trafo) {\textbf{HFT}\\20kHz};
+        \node[block, right=of trafo] (rectHF) {Rect. HF\\AC/DC};
+        \node[block, right=of rectHF] (inv) {Inversor\\DC/AC};
+
+        % Flechas y etiquetas
+        \draw[arrow] (rect) -- node[above, font=\tiny]{DC} (invHF);
+        \draw[arrow] (invHF) -- node[above, font=\tiny]{AC HF} (trafo);
+        \draw[arrow] (trafo) -- node[above, font=\tiny]{AC BT} (rectHF);
+        \draw[arrow] (rectHF) -- node[above, font=\tiny]{DC} (inv);
+
+        % Entradas y salidas
+        \node[left=0.5cm of rect] (in) {\textbf{MT 50Hz}};
+        \draw[arrow] (in) -- (rect);
+        
+        \node[right=0.5cm of inv] (out) {\textbf{BT 50Hz}};
+        \draw[arrow] (inv) -- (out);
+
+    \end{tikzpicture}
+
+    \vspace{2em}
+    \begin{alertblock}{La Clave}
+        Pasar por \textbf{Alta Frecuencia} intermedia permite reducir el tamaño físico drásticamente.
+    \end{alertblock}
+\end{frame}
+
+% --- SECCIÓN 6 ---
+\section{Ventajas y Desafíos}
+
+\begin{frame}{Resumen: Pros y Contras}
+    \begin{columns}[t]
+        \column{0.5\textwidth}
+        \textbf{\textcolor{primary}{Ventajas}}
+        \begin{itemize}
+            \item[\checkmark] Tamaño y peso reducidos.
+            \item[\checkmark] Control instantáneo de voltaje.
+            \item[\checkmark] Bus DC integrado (Renovables/VE).
+            \item[\checkmark] Bidireccionalidad.
+        \end{itemize}
+
+        \column{0.5\textwidth}
+        \textbf{\textcolor{accent}{Desafíos}}
+        \begin{itemize}
+            \item[$\times$] Coste elevado (semiconductores).
+            \item[$\times$] Pérdidas ligeramente mayores (etapas múltiples).
+            \item[$\times$] \textbf{Pérdida de inercia:} Al no tener masa rotatoria, reduce la estabilidad natural de la red ante cambios bruscos de frecuencia.
+        \end{itemize}
+    \end{columns}
+\end{frame}
+
+% --- CIERRE ---
+\section{Conclusiones}
+
+\begin{frame}{Conclusiones}
+    \begin{block}{Potencial Transformador}
+        Los SST unifican la transformación de tensión y la calidad de onda en un solo equipo compacto e inteligente.
+    \end{block}
+
+    \vspace{1em}
+    \textbf{Hoja de ruta:}
+    \begin{itemize}
+        \item Tecnología probada pero cara.
+        \item Necesario reducir costes de carburo de silicio (SiC).
+        \item Futuro estándar para las \textit{Smart Cities}.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[standout]
+    \Huge ¿Preguntas?
+    
+    \vspace{1em}
+    \normalsize \url{email@instituto.com}
+\end{frame}
+
+\end{document}

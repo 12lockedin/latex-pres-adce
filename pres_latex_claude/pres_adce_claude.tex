@@ -1,0 +1,889 @@
+\documentclass[aspectratio=169, 10pt]{beamer} 
+% aspectratio=169 fuerza el formato panorámico
+
+% --- TEMA Y FUENTES ---
+\usetheme{metropolis}
+% Opciones del tema: Bloques con fondo de color y barra de progreso
+\metroset{block=fill, progressbar=frametitle, background=light}
+
+\usepackage[sfdefault]{raleway} % Fuente moderna sans-serif
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+% --- PAQUETES GRÁFICOS ---
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta, shapes, calc, shadows, decorations.pathmorphing, patterns, fit, backgrounds}
+\usepackage{fontawesome5} % Para iconos modernos
+
+% --- COLORES PERSONALIZADOS ---
+\definecolor{primary}{RGB}{0,102,204}      % Azul corporativo
+\definecolor{secondary}{RGB}{51,153,255}    % Azul claro
+\definecolor{accent}{RGB}{255,87,34}        % Naranja acento
+\definecolor{darkgray}{RGB}{60,60,60}
+\definecolor{success}{RGB}{76,175,80}       % Verde éxito
+\definecolor{warning}{RGB}{255,152,0}       % Amarillo advertencia
+
+% Asignación de colores al tema
+\setbeamercolor{palette primary}{bg=primary, fg=white}
+\setbeamercolor{frametitle}{bg=primary, fg=white}
+\setbeamercolor{alerted text}{fg=accent}
+\setbeamercolor{progress bar}{fg=accent, bg=primary!30}
+
+% --- INFORMACIÓN DE LA PRESENTACIÓN ---
+\title{Transformadores de Estado Sólido (SST)}
+\subtitle{Innovación tecnológica en control de tensión}
+\author{Tu Nombre}
+\institute{ADCE}
+\date{\today}
+
+\begin{document}
+
+% 1. PORTADA MEJORADA
+\begin{frame}
+    \titlepage
+    \begin{tikzpicture}[remember picture,overlay]
+        % Elementos decorativos en la portada
+        \fill[accent, opacity=0.1] (current page.south west) rectangle ([yshift=1cm]current page.south east);
+        \node[anchor=south east, opacity=0.3] at ([xshift=-0.5cm, yshift=0.5cm]current page.south east) 
+            {\includegraphics[width=3cm]{example-image-a}};
+    \end{tikzpicture}
+\end{frame}
+
+% 2. ÍNDICE MEJORADO
+\begin{frame}{Contenido}
+    \setbeamertemplate{section in toc}[sections numbered]
+    \tableofcontents
+\end{frame}
+
+% --- SECCIÓN 1 ---
+\section{Introducción}
+
+\begin{frame}{¿Qué vamos a ver hoy?}
+    \begin{columns}[T]
+        \column{0.5\textwidth}
+        \vspace{1em}
+        
+        % Animación progresiva del contenido
+        \begin{itemize}
+            \item<1-> Una tendencia tecnológica \textbf{emergente} en el campo del control de tensión.
+            \item<2-> Los \textbf{\textcolor{accent}{Transformadores de Estado Sólido (SST)}}.
+            \item<3-> Conocidos como \textit{Solid State Transformers} en inglés.
+        \end{itemize}
+        
+        \vspace{1em}
+        \onslide<4->{
+        \begin{alertblock}{Objetivo}
+            Entender cómo esta tecnología revoluciona la distribución eléctrica.
+        \end{alertblock}
+        }
+        
+        \column{0.5\textwidth}
+        \begin{tikzpicture}[scale=0.9, transform shape]
+            % Diagrama conceptual mejorado de un SST
+            \onslide<2->{
+            % Caja principal del SST
+            \draw[fill=secondary!20, draw=primary, line width=2pt, rounded corners] 
+                (0,0) rectangle (4,3);
+            \node[font=\Large\bfseries, primary] at (2,2.5) {SST};
+            
+            % Elementos internos
+            \draw[fill=white, draw=primary] (0.5,0.3) rectangle (1.5,0.8);
+            \node[font=\tiny] at (1,0.55) {AC/DC};
+            
+            \draw[fill=white, draw=primary] (1.8,0.3) rectangle (2.8,0.8);
+            \node[font=\tiny] at (2.3,0.55) {DC/DC};
+            
+            \draw[fill=white, draw=primary] (3.1,0.3) rectangle (4.1,0.8);
+            \node[font=\tiny] at (3.6,0.55) {DC/AC};
+            
+            % Conexiones
+            \draw[-Stealth, thick] (-1,1.5) -- (0,1.5) node[midway, above, font=\scriptsize] {MT};
+            \draw[-Stealth, thick] (4,1.5) -- (5,1.5) node[midway, above, font=\scriptsize] {BT};
+            
+            % Bus DC
+            \draw[accent, line width=2pt] (0.5,1.3) -- (3.6,1.3);
+            \node[accent, font=\tiny] at (2,1.6) {Bus DC};
+            }
+        \end{tikzpicture}
+    \end{columns}
+\end{frame}
+
+% --- SECCIÓN 2 ---
+\section{Conceptos Previos}
+
+\begin{frame}{Recordatorio 1: Transformador Convencional}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{¿Qué hace?}
+        \begin{itemize}
+            \item<1-> Transforma niveles de tensión en CA.
+            \item<2-> Utiliza campos electromagnéticos.
+            \item<3-> Dos devanados acoplados magnéticamente.
+        \end{itemize}
+        
+        \vspace{0.5em}
+        \onslide<4->{
+        \textbf{Importancia:}
+        \begin{itemize}
+            \item Razón principal del uso de corriente alterna.
+            \item Eficiencia energética en transmisión.
+        \end{itemize}
+        }
+
+        \column{0.5\textwidth}
+        \begin{tikzpicture}[scale=0.8]
+            \onslide<2->{
+            % Núcleo magnético
+            \draw[fill=darkgray!30, draw=darkgray, line width=1.5pt] 
+                (-0.3,-2) rectangle (0.3,2);
+            
+            % Devanado primario
+            \draw[primary, line width=2pt, decoration={coil, aspect=0.5, segment length=2mm, amplitude=3mm}, decorate] 
+                (-0.3,-1.5) -- (-0.3,1.5);
+            \node[primary, left] at (-0.3,2.2) {Primario};
+            \draw[-Stealth, primary, thick] (-1.5,1.5) -- (-0.3,1.5);
+            \draw[-Stealth, primary, thick] (-0.3,-1.5) -- (-1.5,-1.5);
+            \node[primary, font=\small] at (-2.2,0) {$V_1$};
+            
+            % Devanado secundario
+            \draw[secondary, line width=2pt, decoration={coil, aspect=0.5, segment length=2mm, amplitude=3mm}, decorate] 
+                (0.3,-1) -- (0.3,1);
+            \node[secondary, right] at (0.3,2.2) {Secundario};
+            \draw[-Stealth, secondary, thick] (0.3,1) -- (1.5,1);
+            \draw[-Stealth, secondary, thick] (1.5,-1) -- (0.3,-1);
+            \node[secondary, font=\small] at (2.2,0) {$V_2$};
+            
+            % Flujo magnético
+            \foreach \y in {-1.2,-0.4,0.4,1.2}
+                \draw[-Stealth, accent, thick, opacity=0.5] (-0.15,\y) -- (0.15,\y);
+            }
+            
+            \onslide<3->{
+            \node[font=\footnotesize, text width=3cm, align=center] at (0,-2.8) 
+                {$\frac{V_1}{V_2} = \frac{N_1}{N_2}$};
+            }
+        \end{tikzpicture}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Recordatorio 2: STATCOM}
+    \begin{columns}
+        \column{0.55\textwidth}
+        \textbf{Función principal:}
+        \begin{itemize}
+            \item<1-> Control de tensión en la red.
+            \item<2-> Mejora calidad del suministro.
+            \item<3-> Intercambio de potencia reactiva.
+        \end{itemize}
+        
+        \vspace{0.5em}
+        \onslide<4->{
+        \textbf{Características:}
+        \begin{itemize}
+            \item Conexión en \textbf{\textcolor{accent}{paralelo}}.
+            \item Basado en VSC (\textit{Voltage Source Converters}).
+            \item Consume solo potencia activa para pérdidas.
+        \end{itemize}
+        }
+
+        \column{0.45\textwidth}
+        \begin{tikzpicture}[scale=0.85]
+            % Red eléctrica (línea principal)
+            \draw[line width=2pt] (-1,2) -- (4,2);
+            \node[above] at (1.5,2) {\small Red};
+            
+            % STATCOM conectado en paralelo
+            \onslide<4->{
+            \draw[accent, line width=2pt] (2,2) -- (2,0);
+            \draw[fill=secondary!30, draw=primary, line width=1.5pt] 
+                (1,0) rectangle (3,-1.5);
+            \node[font=\small\bfseries] at (2,-0.75) {STATCOM};
+            
+            % VSC interno
+            \draw[fill=white] (1.3,-0.3) rectangle (2.7,-1.2);
+            \node[font=\tiny] at (2,-0.75) {VSC};
+            
+            % Flechas de potencia reactiva
+            \draw[-Stealth, success, line width=1.5pt] (2.5,1.8) -- (2.5,0.2);
+            \draw[-Stealth, warning, line width=1.5pt] (1.5,0.2) -- (1.5,1.8);
+            \node[font=\tiny, text width=1.5cm] at (3.5,1) {$Q$ reactiva};
+            }
+            
+            % Tierra
+            \draw (2,-1.5) -- (2,-2);
+            \foreach \x in {-0.3,0,0.3}
+                \draw (\x+2,-2) -- (\x+2,-2.2);
+            \draw (1.4,-2.2) -- (2.6,-2.2);
+        \end{tikzpicture}
+        
+        \vspace{0.5em}
+        \onslide<4->{
+        \begin{alertblock}{Clave}
+            \centering Conexión en \textbf{derivación}
+        \end{alertblock}
+        }
+    \end{columns}
+\end{frame}
+
+% --- SECCIÓN 3 ---
+\section{Transformadores de Estado Sólido}
+
+\begin{frame}{¿Qué son los SST?}
+    \begin{block}{Definición}
+        Los SST son equipos de paso que se conectan \textbf{\textcolor{accent}{en serie}} al flujo de potencia, similar a los transformadores convencionales, pero usando electrónica de potencia.
+    \end{block}
+
+    \vspace{1em}
+
+    \begin{center}
+    \begin{tikzpicture}[auto, node distance=2.5cm, >=Stealth, scale=1.1, transform shape]
+        % Red MT
+        \onslide<1->{
+        \node[circle, draw=primary, line width=2pt, minimum size=1cm, fill=white] (redMT) {};
+        \draw[primary, line width=1.5pt] (redMT.north) -- ++(0,0.3);
+        \draw[primary, line width=1.5pt] (redMT.south) -- ++(0,-0.3);
+        \node[below=0.3cm of redMT, font=\small] {Red MT};
+        }
+        
+        % SST
+        \onslide<2->{
+        \node[right=1.5cm of redMT, fill=secondary!30, draw=primary, line width=2pt, 
+              minimum width=3cm, minimum height=1.5cm, rounded corners] (sst) {};
+        \node[font=\Large\bfseries, primary] at (sst) {SST};
+        
+        % Detalles internos del SST
+        \draw[darkgray, line width=0.5pt] ([xshift=-0.8cm]sst.center) rectangle ++(0.4,0.6);
+        \draw[darkgray, line width=0.5pt] ([xshift=-0.2cm]sst.center) rectangle ++(0.4,0.6);
+        \draw[darkgray, line width=0.5pt] ([xshift=0.4cm]sst.center) rectangle ++(0.4,0.6);
+        }
+        
+        % Red BT
+        \onslide<1->{
+        \node[circle, draw=primary, line width=2pt, minimum size=1cm, fill=white, right=1.5cm of sst] (redBT) {};
+        \draw[primary, line width=1.5pt] (redBT.north) -- ++(0,0.3);
+        \draw[primary, line width=1.5pt] (redBT.south) -- ++(0,-0.3);
+        \node[below=0.3cm of redBT, font=\small] {Red BT};
+        }
+        
+        % Conexiones en serie
+        \onslide<3->{
+        \draw[very thick, primary, -Stealth] (redMT) -- (sst) node[midway, above, font=\scriptsize] {Serie};
+        \draw[very thick, primary, -Stealth] (sst) -- (redBT) node[midway, above, font=\scriptsize] {Paso};
+        }
+        
+        % Comparación visual con STATCOM
+        \onslide<4->{
+        \node[below=1.5cm of sst, text width=6cm, align=center, font=\small] 
+            {\textcolor{accent}{STATCOM} $\rightarrow$ Paralelo (Derivación) vs. 
+             \textcolor{primary}{SST} $\rightarrow$ Serie (Paso)};
+        }
+    \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Funcionalidad Híbrida}
+    \begin{center}
+        \begin{tikzpicture}
+            \onslide<1->{
+            % Ecuación visual
+            \node[font=\Large, primary] (sst) at (0,0) {\textbf{SST}};
+            \node[font=\Large] at (1.5,0) {=};
+            }
+            
+            \onslide<2->{
+            % Transformador
+            \node[draw=secondary, fill=secondary!20, rounded corners, minimum width=2cm, 
+                  minimum height=1cm, line width=1.5pt] (trafo) at (3.5,0) {};
+            \node[font=\small, secondary] at (trafo) {\textbf{Transformador}};
+            \draw[secondary, decoration={coil}, decorate, line width=1pt] 
+                ([xshift=-0.3cm]trafo.west) -- ([xshift=-0.3cm, yshift=0.4cm]trafo.west);
+            }
+            
+            \node[font=\Large] at (5.5,0) {+};
+            
+            \onslide<3->{
+            % Compensador
+            \node[draw=accent, fill=accent!20, rounded corners, minimum width=2cm, 
+                  minimum height=1cm, line width=1.5pt] (comp) at (7.5,0) {};
+            \node[font=\small, accent] at (comp) {\textbf{Compensador}};
+            \draw[accent, -Stealth, line width=1pt] 
+                ([xshift=0.2cm]comp.east) -- ([xshift=0.2cm, yshift=0.3cm]comp.east);
+            \draw[accent, -Stealth, line width=1pt] 
+                ([xshift=0.4cm, yshift=0.3cm]comp.east) -- ([xshift=0.4cm]comp.east);
+            }
+        \end{tikzpicture}
+    \end{center}
+
+    \vspace{2em}
+
+    \begin{columns}[t]
+        \column{0.45\textwidth}
+        \onslide<2->{
+        \begin{exampleblock}{Como Transformador}
+            \begin{itemize}
+                \item[\faCheckCircle] Transforma tensión.
+                \item[\faCheckCircle] Transfiere potencia activa.
+                \item[\faCheckCircle] Aislamiento galvánico.
+            \end{itemize}
+        \end{exampleblock}
+        }
+
+        \column{0.45\textwidth}
+        \onslide<3->{
+        \begin{alertblock}{Como Compensador}
+            \begin{itemize}
+                \item[\faCheckCircle] Control de factor de potencia.
+                \item[\faCheckCircle] Regulación dinámica.
+                \item[\faCheckCircle] Eliminación de armónicos.
+            \end{itemize}
+        \end{alertblock}
+        }
+    \end{columns}
+\end{frame}
+
+% --- SECCIÓN 4 ---
+\section{Características Principales}
+
+\begin{frame}{Características Esenciales de los SST}
+    \begin{enumerate}
+        \item<1-> \textbf{Transformación de tensión} con transmisión de potencia activa.
+        
+        \item<2-> \textbf{Control de factor de potencia} activo.
+        
+        \item<3-> \textbf{Regulación dinámica de tensión:}
+        \begin{itemize}
+            \item Si entrada baja 10\% $\rightarrow$ salida mantiene 230V exactos.
+            \item \textcolor{darkgray}{(Un trafo convencional no puede hacer esto sin tap-changers lentos)}.
+        \end{itemize}
+        
+        \item<4-> \textbf{Reducción drástica de peso y volumen:}
+        \begin{itemize}
+            \item Opera a $\sim$\textcolor{accent}{20,000 Hz} (vs 50 Hz convencional).
+            \item Transformador físico mucho más pequeño.
+        \end{itemize}
+    \end{enumerate}
+    
+    \vspace{0.5em}
+    \onslide<4->{
+    \begin{center}
+    \begin{tikzpicture}[scale=0.6]
+        % Trafo convencional (grande)
+        \draw[fill=darkgray!30, draw=darkgray, line width=1pt] 
+            (0,0) rectangle (2,2.5);
+        \node[font=\tiny, text width=1.5cm, align=center] at (1,-0.5) {Trafo 50Hz};
+        \node[font=\scriptsize] at (1,1.25) {\Large \faIndustry};
+        
+        % vs
+        \node[font=\small] at (3,1.25) {vs};
+        
+        % SST (pequeño)
+        \draw[fill=secondary!30, draw=primary, line width=1pt] 
+            (4,0.75) rectangle (5,1.75);
+        \node[font=\tiny, text width=1.5cm, align=center] at (4.5,-0.5) {SST 20kHz};
+        \node[font=\scriptsize] at (4.5,1.25) {\faMicrochip};
+        
+        % Flecha de comparación
+        \draw[-Stealth, accent, line width=2pt] (2.2,2) -- (3.8,2);
+        \node[accent, font=\small, above] at (3,2) {70\% más pequeño};
+    \end{tikzpicture}
+    \end{center}
+    }
+\end{frame}
+
+\begin{frame}{Más Características Destacadas}
+    \begin{columns}
+        \column{0.6\textwidth}
+        \begin{enumerate}
+            \setcounter{enumi}{4}
+            \item<1-> \textbf{Bus de corriente continua (DC):}
+            \begin{itemize}
+                \footnotesize
+                \item Conexión directa de paneles solares.
+                \item Carga directa de VE sin rectificador externo.
+            \end{itemize}
+            \item<2-> \textbf{Eliminación de armónicos.}
+            \item<3-> \textbf{Clave para SmartGrids:}
+            \begin{itemize}
+                 \footnotesize
+                \item Control total del flujo (bidireccional).
+            \end{itemize}
+        \end{enumerate}
+        
+        \column{0.4\textwidth}
+        \onslide<1->{
+        \begin{tikzpicture}[scale=0.7]
+            % Bus DC central
+            \draw[accent, line width=3pt] (0,2) -- (4,2);
+            \node[accent, font=\small] at (2,2.5) {Bus DC};
+            
+            % Panel solar
+            \draw[fill=warning!30, draw=warning, line width=1pt] 
+                (0.5,3) rectangle (1.5,3.8);
+            \node[font=\tiny] at (1,3.4) {\faSolarPanel};
+            \draw[-Stealth, success, line width=1.5pt] (1,3) -- (1,2);
+            
+            % Batería
+            \draw[fill=success!30, draw=success, line width=1pt] 
+                (2.5,3) rectangle (3.5,3.8);
+            \node[font=\tiny] at (3,3.4) {\faBatteryFull};
+            \draw[-Stealth, success, line width=1.5pt] (3,2) -- (3,3);
+            
+            % Coche eléctrico
+            \draw[fill=primary!30, draw=primary, line width=1pt] 
+                (1,0.5) rectangle (3,1.2);
+            \node[font=\tiny] at (2,0.85) {\faCar};
+            \draw[-Stealth, primary, line width=1.5pt] (2,2) -- (2,1.2);
+        \end{tikzpicture}
+        }
+        
+        \vspace{1em}
+        \onslide<3->{
+        \begin{alertblock}{Aplicación}
+            Principalmente en redes de \textbf{Media} y \textbf{Baja Tensión} (límites actuales de semiconductores).
+        \end{alertblock}
+        }
+    \end{columns}
+\end{frame}
+
+% --- SECCIÓN 5 ---
+\section{Arquitectura del SST}
+
+\begin{frame}{Esquema Típico de un SST}
+    \begin{center}
+    \begin{tikzpicture}[
+        scale=0.9,
+        block/.style={rectangle, draw=primary, line width=1.5pt, fill=white, 
+                      minimum width=2cm, minimum height=1.2cm, rounded corners, font=\small},
+        label/.style={font=\tiny, text=darkgray}
+    ]
+        % Etapa 1: Rectificador
+        \onslide<1->{
+        \node[block, fill=secondary!20] (rect) at (0,0) {AC/DC};
+        \node[label, above=0.1cm of rect] {Etapa 1};
+        \node[label, below=0.1cm of rect, text width=2cm, align=center] {Rectificador\\Control FP};
+        }
+        
+        % Etapa 2: DC/DC con HFT
+        \onslide<2->{
+        \node[block, fill=accent!20, right=1.5cm of rect] (dcdc) at (3.5,0) {DC/DC};
+        \node[label, above=0.1cm of dcdc] {Etapa 2};
+        \node[label, below=0.1cm of dcdc, text width=2cm, align=center] {HFT\\$\sim$20 kHz};
+        
+        % Destacar el HFT
+        \draw[accent, line width=2pt, dashed, rounded corners] 
+            ([xshift=-0.3cm, yshift=0.8cm]dcdc.north west) rectangle 
+            ([xshift=0.3cm, yshift=-0.8cm]dcdc.south east);
+        \node[accent, font=\footnotesize, above=1cm of dcdc] {\faHeart\ Corazón del SST};
+        }
+        
+        % Etapa 3: Inversor
+        \onslide<3->{
+        \node[block, fill=secondary!20, right=1.5cm of dcdc] (inv) at (7,0) {DC/AC};
+        \node[label, above=0.1cm of inv] {Etapa 3};
+        \node[label, below=0.1cm of inv, text width=2cm, align=center] {Inversor\\50 Hz};
+        }
+        
+        % Conexiones
+        \onslide<1->{
+        \draw[-Stealth, thick, primary] (-2,0) -- (rect) node[midway, above, font=\scriptsize] {MT AC};
+        }
+        \onslide<2->{
+        \draw[-Stealth, thick, primary] (rect) -- (dcdc) node[midway, above, font=\tiny] {DC};
+        }
+        \onslide<3->{
+        \draw[-Stealth, thick, primary] (dcdc) -- (inv) node[midway, above, font=\tiny] {DC};
+        \draw[-Stealth, thick, primary] (inv) -- ++(2,0) node[midway, above, font=\scriptsize] {BT AC};
+        }
+        
+        % Bus DC
+        \onslide<4->{
+        \draw[accent, line width=2pt] (0,-1.5) -- (7,-1.5);
+        \node[accent, font=\small, below] at (3.5,-1.5) {Bus DC común};
+        \draw[-Stealth, accent, thick] (3.5,-1.5) -- (3.5,-0.7);
+        }
+    \end{tikzpicture}
+    \end{center}
+    
+    \vspace{1em}
+    \onslide<4->{
+    \begin{alertblock}{Ventaja Clave}
+        Las tres etapas conectadas en serie permiten \textbf{control total} y un \textbf{transformador físico miniaturizado}.
+    \end{alertblock}
+    }
+\end{frame}
+
+\begin{frame}{Etapa 2: El "Corazón" (DC/DC Alta Frecuencia)}
+    \begin{columns}
+        \column{0.55\textwidth}
+        \onslide<1->{
+        \begin{block}{Componentes}
+        \begin{itemize}
+            \item Inversor DC/AC (alta frecuencia).
+            \item \textbf{Transformador de Alta Frecuencia (HFT)}.
+            \item Rectificador AC/DC.
+        \end{itemize}
+        \end{block}
+        }
+        
+        \vspace{0.5em}
+        \onslide<2->{
+        \textbf{Ventaja del HFT:}
+        \small
+        Al operar a $\sim$20 kHz, el núcleo magnético necesario es \textbf{minúsculo} comparado con uno de 50 Hz, manteniendo el aislamiento galvánico.
+        }
+        
+        \vspace{0.5em}
+        \onslide<3->{
+        \begin{exampleblock}{La Física detrás}
+            $$B = \frac{V}{4.44 \cdot f \cdot N \cdot A}$$
+            \footnotesize
+            Mayor frecuencia $\rightarrow$ menor área del núcleo.
+        \end{exampleblock}
+        }
+        
+        \column{0.45\textwidth}
+        \begin{tikzpicture}[scale=0.8]
+            % Comparación visual de tamaños
+            \onslide<2->{
+            % Transformador 50 Hz (grande)
+            \draw[fill=darkgray!40, draw=darkgray, line width=2pt] 
+                (0,0) rectangle (2,3);
+            \node[font=\small, text width=1.5cm, align=center] at (1,1.5) {50 Hz};
+            \node[font=\footnotesize] at (1,-0.6) {Trafo convencional};
+            
+            % Flecha
+            \draw[-Stealth, accent, line width=3pt] (2.5,1.5) -- (3.5,1.5);
+            \node[accent, font=\tiny, above] at (3,1.5) {400x más frecuencia};
+            }
+            
+            \onslide<3->{
+            % Transformador 20 kHz (pequeño)
+            \draw[fill=success!40, draw=success, line width=2pt] 
+                (4,0.8) rectangle (5,2.2);
+            \node[font=\small, text width=1.2cm, align=center] at (4.5,1.5) {20 kHz};
+            \node[font=\footnotesize, success] at (4.5,-0.6) {HFT del SST};
+            
+            % Destacar reducción
+            \node[font=\Large, success] at (4.5,3.2) {\faCheckCircle};
+            \node[font=\tiny, text width=1.8cm, align=center, success] at (4.5,2.7) {95\% más pequeño};
+            }
+        \end{tikzpicture}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Proceso de Conversión Completo}
+    \centering
+    
+    % Diagrama de flujo mejorado con animación
+    \begin{tikzpicture}[
+        node distance=0.3cm and 0.5cm,
+        auto,
+        block/.style={rectangle, draw=primary, thick, fill=white, text width=1.6cm, 
+                      align=center, rounded corners, minimum height=1.2cm, font=\scriptsize,
+                      drop shadow},
+        arrow/.style={-Stealth, line width=2pt, primary},
+        stage/.style={font=\tiny, darkgray}
+    ]
+        % Entrada
+        \node[text width=1.2cm, align=center] (in) {\textbf{MT}\\50Hz AC};
+        
+        % Etapa 1
+        \onslide<1->{
+        \node[block, fill=secondary!20, right=0.5cm of in] (rect) {Rectific.\\AC/DC};
+        \node[stage, below=0.05cm of rect] {Etapa 1};
+        \draw[arrow] (in) -- (rect);
+        }
+        
+        % A DC
+        \onslide<2->{
+        \node[right=0.3cm of rect, font=\tiny, text=accent] (dc1) {DC};
+        \draw[arrow] (rect) -- (dc1);
+        }
+        
+        % Etapa 2a: Inversor HF
+        \onslide<3->{
+        \node[block, fill=warning!20, right=0.3cm of dc1] (invHF) {Inv. HF\\DC/AC};
+        \node[stage, below=0.05cm of invHF] {2a};
+        \draw[arrow] (dc1) -- (invHF);
+        }
+        
+        % A AC HF
+        \onslide<4->{
+        \node[right=0.3cm of invHF, font=\tiny, text=accent, text width=0.8cm, align=center] (achf1) {AC\\20kHz};
+        \draw[arrow] (invHF) -- (achf1);
+        }
+        
+        % Etapa 2b: HFT
+        \onslide<5->{
+        \node[block, fill=accent!30, draw=accent, right=0.3cm of achf1] (trafo) {\textbf{HFT}\\Transf.};
+        \node[stage, below=0.05cm of trafo, text=accent] {2b \faHeart};
+        \draw[arrow, accent] (achf1) -- (trafo);
+        }
+        
+        % AC HF BT
+        \onslide<6->{
+        \node[right=0.3cm of trafo, font=\tiny, text=accent, text width=0.8cm, align=center] (achf2) {AC BT\\20kHz};
+        \draw[arrow, accent] (trafo) -- (achf2);
+        }
+        
+        % Etapa 2c: Rectificador HF
+        \onslide<7->{
+        \node[block, fill=warning!20, right=0.3cm of achf2] (rectHF) {Rect. HF\\AC/DC};
+        \node[stage, below=0.05cm of rectHF] {2c};
+        \draw[arrow] (achf2) -- (rectHF);
+        }
+        
+        % A DC
+        \onslide<8->{
+        \node[right=0.3cm of rectHF, font=\tiny, text=accent] (dc2) {DC};
+        \draw[arrow] (rectHF) -- (dc2);
+        }
+        
+        % Etapa 3: Inversor final
+        \onslide<9->{
+        \node[block, fill=secondary!20, right=0.3cm of dc2] (inv) {Inversor\\DC/AC};
+        \node[stage, below=0.05cm of inv] {Etapa 3};
+        \draw[arrow] (dc2) -- (inv);
+        }
+        
+        % Salida
+        \onslide<10->{
+        \node[text width=1.2cm, align=center, right=0.5cm of inv] (out) {\textbf{BT}\\50Hz AC};
+        \draw[arrow] (inv) -- (out);
+        }
+    \end{tikzpicture}
+
+    \vspace{1.5em}
+    \onslide<11->{
+    \begin{alertblock}{La Clave}
+        Pasar por \textbf{Alta Frecuencia} intermedia permite reducir el tamaño físico drásticamente manteniendo aislamiento galvánico.
+    \end{alertblock}
+    }
+\end{frame}
+
+% --- SECCIÓN 6 ---
+\section{Ventajas y Desafíos}
+
+\begin{frame}{Resumen: Pros y Contras}
+    \begin{columns}[t]
+        \column{0.48\textwidth}
+        \textbf{\textcolor{success}{Ventajas}} \Large\textcolor{success}{\faThumbsUp}
+        \normalsize
+        \vspace{0.5em}
+        \begin{itemize}
+            \item<1->[\textcolor{success}{\faCheckCircle}] Tamaño y peso reducidos (70-95\%).
+            \item<2->[\textcolor{success}{\faCheckCircle}] Control instantáneo de voltaje.
+            \item<3->[\textcolor{success}{\faCheckCircle}] Bus DC integrado (Renovables/VE).
+            \item<4->[\textcolor{success}{\faCheckCircle}] Bidireccionalidad total.
+            \item<5->[\textcolor{success}{\faCheckCircle}] Eliminación de armónicos.
+            \item<6->[\textcolor{success}{\faCheckCircle}] Ideal para SmartGrids.
+        \end{itemize}
+
+        \column{0.48\textwidth}
+        \textbf{\textcolor{accent}{Desafíos}} \Large\textcolor{accent}{\faExclamationTriangle}
+        \normalsize
+        \vspace{0.5em}
+        \begin{itemize}
+            \item<7->[\textcolor{accent}{\faTimesCircle}] \textbf{Coste elevado:} Semiconductores (SiC, GaN).
+            \item<8->[\textcolor{accent}{\faTimesCircle}] \textbf{Pérdidas:} Ligeramente mayores (etapas múltiples).
+            \item<9->[\textcolor{accent}{\faTimesCircle}] \textbf{Limitación de tensión:} Solo MT/BT actualmente.
+            \item<10->[\textcolor{accent}{\faTimesCircle}] \textbf{Pérdida de inercia:} Sin masa rotatoria, menor estabilidad ante perturbaciones.
+        \end{itemize}
+    \end{columns}
+    
+    \vspace{1em}
+    \onslide<11->{
+    \begin{center}
+    \begin{tikzpicture}
+        % Escala visual de madurez tecnológica
+        \draw[line width=1pt, darkgray] (0,0) -- (10,0);
+        \foreach \x in {0,2.5,5,7.5,10}
+            \draw[darkgray] (\x,0) -- (\x,-0.2);
+        
+        \node[below, font=\tiny] at (0,-0.2) {Laboratorio};
+        \node[below, font=\tiny] at (2.5,-0.2) {Prototipos};
+        \node[below, font=\tiny] at (5,-0.2) {Primeras aplicaciones};
+        \node[below, font=\tiny] at (7.5,-0.2) {Comercial};
+        \node[below, font=\tiny] at (10,-0.2) {Estándar};
+        
+        % Posición actual del SST
+        \fill[accent] (5,0) circle (0.2cm);
+        \node[accent, above, font=\small] at (5,0.3) {SST hoy};
+        \draw[-Stealth, accent, line width=1.5pt] (5.5,0.3) -- (7,0.3);
+    \end{tikzpicture}
+    \end{center}
+    }
+\end{frame}
+
+\begin{frame}{Comparativa Visual: Trafo vs SST}
+    \begin{center}
+    \begin{tikzpicture}[scale=0.9]
+        % Tabla comparativa
+        \node[font=\small\bfseries] at (2,4) {Transformador Convencional};
+        \node[font=\small\bfseries] at (7,4) {SST};
+        
+        % Filas de comparación
+        \node[font=\small, left] at (0,3.2) {Peso:};
+        \node[font=\small] at (2,3.2) {100\%};
+        \node[font=\small] at (7,3.2) {5-30\%};
+
+        \node[font=\small, left] at (0,2.4) {Volumen:};
+        \node[font=\small] at (2,2.4) {100\%};
+        \node[font=\small] at (7,2.4) {10-30\%};
+
+        \node[font=\small, left] at (0,1.6) {Regulación:};
+        \node[font=\small] at (2,1.6) {Tap manual};
+        \node[font=\small] at (7,1.6) {Instantánea};
+
+        \node[font=\small, left] at (0,0.8) {Eficiencia:};
+        \node[font=\small] at (2,0.8) {99.5\%};
+        \node[font=\small] at (7,0.8) {>97\%};
+
+        \node[font=\small, left] at (0,0) {Coste:};
+        \node[font=\small] at (2,0) {Bajo};
+        \node[font=\small] at (7,0) {Alto};
+
+        % Indicadores visuales
+        \onslide<2->{
+        \node[success] at (9,3.2) {\faArrowUp};
+        \node[success] at (9,2.4) {\faArrowUp};
+        \node[success] at (9,1.6) {\faArrowUp};
+        \node[warning] at (9,0.8) {\faArrowDown};
+        \node[accent] at (9,0) {\faArrowDown};
+        }
+        
+        % Líneas separadoras
+        \draw[darkgray, dashed] (0,3.6) -- (9,3.6);
+        \draw[darkgray, dashed] (0,2.8) -- (9,2.8);
+        \draw[darkgray, dashed] (0,2) -- (9,2);
+        \draw[darkgray, dashed] (0,1.2) -- (9,1.2);
+        \draw[darkgray, dashed] (0,0.4) -- (9,0.4);
+    \end{tikzpicture}
+    \end{center}
+    
+    \vspace{0.5em}
+    \onslide<3->{
+    \begin{alertblock}{Conclusión Comparativa}
+        El SST supera al transformador convencional en \textbf{compacidad, control y funcionalidad}, pero requiere reducción de costes para despliegue masivo.
+    \end{alertblock}
+    }
+\end{frame}
+
+% --- CIERRE ---
+\section{Conclusiones}
+
+\begin{frame}{Conclusiones}
+    \begin{center}
+    \begin{tikzpicture}[scale=0.9]
+        % Diagrama de síntesis
+        \onslide<1->{
+        \node[draw=primary, fill=primary!10, line width=2pt, rounded corners, 
+              minimum width=8cm, minimum height=1.5cm, font=\large] (pot) at (0,2) 
+            {\textbf{Potencial Transformador de los SST}};
+        }
+        
+        % Características clave
+        \onslide<2->{
+        \node[draw=secondary, fill=white, rounded corners, text width=2.5cm, align=center] (c1) at (-3,0) 
+            {\small Transformación + Compensación};
+        \draw[-Stealth, thick, primary] (pot) -- (c1);
+        }
+        
+        \onslide<3->{
+        \node[draw=secondary, fill=white, rounded corners, text width=2.5cm, align=center] (c2) at (0,0) 
+            {\small Compacto e Inteligente};
+        \draw[-Stealth, thick, primary] (pot) -- (c2);
+        }
+        
+        \onslide<4->{
+        \node[draw=secondary, fill=white, rounded corners, text width=2.5cm, align=center] (c3) at (3,0) 
+            {\small SmartGrids del futuro};
+        \draw[-Stealth, thick, primary] (pot) -- (c3);
+        }
+    \end{tikzpicture}
+    \end{center}
+
+    \vspace{1em}
+    \onslide<5->{
+    \textbf{Hoja de ruta:}
+    \begin{itemize}
+        \item[\faFlask] Tecnología probada pero cara.
+        \item[\faMicrochip] Necesario reducir costes de carburo de silicio (SiC) y GaN.
+        \item[\faCity] Futuro estándar para las \textit{Smart Cities}.
+        \item[\faChartLine] Aplicaciones nicho: VE, renovables, microredes.
+    \end{itemize}
+    }
+    
+    \vspace{0.5em}
+    \onslide<6->{
+    \begin{exampleblock}{Visión 2030-2040}
+        Los SST serán el \textbf{estándar} en distribución urbana, integrando generación distribuida, almacenamiento y movilidad eléctrica en un solo dispositivo inteligente.
+    \end{exampleblock}
+    }
+\end{frame}
+
+\begin{frame}{Aplicaciones Actuales y Futuras}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{\textcolor{primary}{Aplicaciones actuales:}}
+        \begin{itemize}
+            \item<1->[\faBolt] Estaciones de carga ultrarrápida VE.
+            \item<2->[\faSolarPanel] Microredes con renovables.
+            \item<3->[\faIndustry] Industrias con calidad crítica.
+            \item<4->[\faShip] Tracción naval/ferroviaria.
+        \end{itemize}
+        
+        \column{0.5\textwidth}
+        \textbf{\textcolor{accent}{Futuro cercano:}}
+        \begin{itemize}
+            \item<5->[\faCity] Distribución urbana inteligente.
+            \item<6->[\faBuilding] Edificios con gestión energética.
+            \item<7->[\faServer] Centros de datos eficientes.
+            \item<8->[\faPlane] Aviación eléctrica (potencia).
+        \end{itemize}
+    \end{columns}
+    
+    \vspace{1.5em}
+    \onslide<9->{
+    \begin{center}
+    \begin{tikzpicture}
+        % Timeline visual
+        \draw[-Stealth, thick, primary] (0,0) -- (8,0);
+        \node[below, font=\tiny] at (0,0) {2024};
+        \node[below, font=\tiny] at (4,0) {2030};
+        \node[below, font=\tiny] at (8,0) {2040};
+        
+        % Hitos
+        \fill[accent] (2,0) circle (0.15cm);
+        \node[above, font=\tiny, text width=2cm, align=center] at (2,0.3) {Primeras instalaciones comerciales};
+        
+        \fill[success] (5,0) circle (0.15cm);
+        \node[above, font=\tiny, text width=2cm, align=center] at (5,0.3) {Reducción coste 50\%};
+        
+        \fill[primary] (7.5,0) circle (0.15cm);
+        \node[above, font=\tiny, text width=2cm, align=center] at (7.5,0.3) {Estándar en ciudades};
+    \end{tikzpicture}
+    \end{center}
+    }
+\end{frame}
+
+\begin{frame}[standout]
+    \Huge ¿Preguntas?
+    
+    \vspace{2em}
+    
+    \begin{tikzpicture}
+        % Icono de email
+        \node[font=\Large, primary] at (0,0) {\faEnvelope};
+        \node[font=\normalsize, right] at (0.5,0) {email@instituto.com};
+    \end{tikzpicture}
+    
+    \vspace{1em}
+    \normalsize
+    \textcolor{darkgray}{Gracias por vuestra atención}
+\end{frame}
+
+\end{document}

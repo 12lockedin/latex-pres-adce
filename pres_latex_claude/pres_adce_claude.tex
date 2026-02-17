@@ -25,8 +25,8 @@
 \definecolor{darkgray}{RGB}{60,60,60}
 \definecolor{success}{RGB}{76,175,80}       % Verde éxito
 \definecolor{warning}{RGB}{255,152,0}       % Amarillo advertencia
-\definecolor{trafocolor}{HTML}{7415A7}       % Violeta transformador
-\definecolor{compcolor}{HTML}{023E8A}        % Azul compensador
+\definecolor{trafocolor}{RGB}{65,90,119}       % Violeta transformador
+\definecolor{compcolor}{RGB}{2,62,138}        % Azul compensador
 
 % Asignación de colores al tema
 \setbeamercolor{palette primary}{bg=primary, fg=white}
@@ -267,9 +267,9 @@
         \setbeamercolor{block body example}{bg=trafocolor!10}
         \begin{exampleblock}{Como Transformador}
             \begin{itemize}
-                \item[\faCheckCircle] Transforma tensión.
-                \item[\faCheckCircle] Transfiere potencia activa.
-                \item[\faCheckCircle] Aislamiento galvánico.
+                \item[\textcolor{success}{\faCheckCircle}] Transforma tensión.
+                \item[\textcolor{success}{\faCheckCircle}] Transfiere potencia activa.
+                \item[\textcolor{success}{\faCheckCircle}] Aislamiento galvánico.
             \end{itemize}
         \end{exampleblock}}
 
@@ -278,9 +278,9 @@
         \setbeamercolor{block body alerted}{bg=compcolor!10}
         \begin{alertblock}{Como Compensador}
             \begin{itemize}
-                \item[\faCheckCircle] Control de factor de potencia.
-                \item[\faCheckCircle] Regulación dinámica.
-                \item[\faCheckCircle] Eliminación de armónicos.
+                \item[\textcolor{success}{\faCheckCircle}] Control de factor de potencia.
+                \item[\textcolor{success}{\faCheckCircle}] Regulación dinámica.
+                \item[\textcolor{success}{\faCheckCircle}] Eliminación de armónicos.
             \end{itemize}
         \end{alertblock}}
     \end{columns}
